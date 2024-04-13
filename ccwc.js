@@ -14,7 +14,7 @@ rl.question('ccwc ', (input) => {
   // define the command options
   const getBytes = '-c';
   const getLineNo = '-l';
-
+  const getWordNo = '-w';
 
   // split the input by whitespace to extract the command and file name
   const [command, fileName] = input.trim().split(/\s+/);
@@ -31,7 +31,6 @@ rl.question('ccwc ', (input) => {
     });
     // if command options is getLineNo, and file exists...
   } else if (command === getLineNo && fileName && fs.existsSync(fileName)) {
-    // get bytes in the chosen file
     fs.readFile(fileName, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading file:', err);
@@ -43,6 +42,20 @@ rl.question('ccwc ', (input) => {
         const noOfLines = lines.length;
         // output no. of lines
         console.log(noOfLines, `${fileName}`);
+    });
+     // if command option is getWordNo, and file exists...
+  } else if (command === getWordNo && fileName && fs.existsSync(fileName)) {
+    fs.readFile(fileName, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return;
+        }
+        // split file contents into array of words
+        const words = data.split(/\s+/);
+        // get no. of words
+        const noOfWords = words.length;
+        // output no. of words
+        console.log(noOfWords, `${fileName}`);
     });
   } else {
     console.log('Input does not match the expected format or the file does not exist. Nothing will happen.');

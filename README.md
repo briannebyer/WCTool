@@ -1,2 +1,2 @@
-# WCTool
-Challenge #1 from John Crickett's Coding Challenges!
+# Build Your Own WC Tool
+[Challenge #1 from John Crickett](https://codingchallenges.fyi/challenges/challenge-wc)

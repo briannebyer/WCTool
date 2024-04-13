@@ -11,21 +11,16 @@ const rl = readline.createInterface({
 // ask the user for their input
 rl.question('ccwc ', (input) => {
 
-  // define the command format
-  const expectedFormat = '-c';
+  // define the command options
+  const getBytes = '-c';
+  const getLineNo = '-l';
+
 
   // split the input by whitespace to extract the command and file name
   const [command, fileName] = input.trim().split(/\s+/);
 
-// log the extracted command and file name for debugging
-//   console.log('Extracted command:', command);
-//   console.log('Extracted file name:', fileName);
-
-
-  // check if the input matches the expected format and the file exists
-  if (command === expectedFormat && fileName && fs.existsSync(fileName)) {
-    console.log(`Input matches the expected format and ${fileName} exists.`);
-    
+  // if command option is getBytes and file exists...
+  if (command === getBytes && fileName && fs.existsSync(fileName)) {
     // get bytes in the chosen file
     fs.stat(fileName, (err, stats) => {
         if (err) {
@@ -33,7 +28,22 @@ rl.question('ccwc ', (input) => {
             return;
         }
         console.log(`${stats.size} ${fileName}`);
-    })
+    });
+    // if command options is getLineNo, and file exists...
+  } else if (command === getLineNo && fileName && fs.existsSync(fileName)) {
+    // get bytes in the chosen file
+    fs.readFile(fileName, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return;
+        }
+        // split file contents into array of lines
+        const lines = data.split(/\r?\n/);
+        // get no. of lines
+        const noOfLines = lines.length;
+        // output no. of lines
+        console.log(noOfLines, `${fileName}`);
+    });
   } else {
     console.log('Input does not match the expected format or the file does not exist. Nothing will happen.');
   }

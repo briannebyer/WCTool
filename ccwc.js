@@ -17,10 +17,23 @@ rl.question('ccwc ', (input) => {
   // split the input by whitespace to extract the command and file name
   const [command, fileName] = input.trim().split(/\s+/);
 
+// log the extracted command and file name for debugging
+//   console.log('Extracted command:', command);
+//   console.log('Extracted file name:', fileName);
+
+
   // check if the input matches the expected format and the file exists
   if (command === expectedFormat && fileName && fs.existsSync(fileName)) {
     console.log(`Input matches the expected format and ${fileName} exists.`);
-    // perform some action with the file (e.g., process the text file)
+    
+    // get bytes in the chosen file
+    fs.stat(fileName, (err, stats) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return;
+        }
+        console.log(`${stats.size} ${fileName}`);
+    })
   } else {
     console.log('Input does not match the expected format or the file does not exist. Nothing will happen.');
   }
